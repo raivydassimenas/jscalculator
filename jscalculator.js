@@ -21,6 +21,15 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) {
+        screen.textContent = "Division by 0";
+        num1 = 0;
+        num2 = undefined;
+        op = undefined;
+    }
+    if (a % b !== 0) {
+        return Math.round((a / b) * 100) / 100;
+    }
     return a / b;
 }
 
@@ -39,34 +48,34 @@ function operate(operator, num1, num2) {
 
 const add_b = document.querySelector('#add');
 add_b.addEventListener('click', (e) => {
-    num1 = display;
+    num1 = op ? operate(op, num1, display) : display;
     op = "+";
     display = 0;
-    screen.textContent = display;
+    screen.textContent = num1;
 });
 
 const sub_b = document.querySelector('#sub');
 sub_b.addEventListener('click', (e) => {
-    num1 = display;
+    num1 = op ? operate(op, num1, display) : display;
     op = "-";
     display = 0;
-    screen.textContent = display;
+    screen.textContent = num1;
 });
 
 const mult_b = document.querySelector('#mult');
 mult_b.addEventListener('click', (e) => {
-    num1 = display;
+    num1 = op ? operate(op, num1, display) : display;
     op = "*";
     display = 0;
-    screen.textContent = display;
+    screen.textContent = num1;
 });
 
 const div_b = document.querySelector('#div');
 div_b.addEventListener('click', (e) => {
-    num1 = display;
+    num1 =op ? operate(op, num1, display) : display;
     op = "/";
     display = 0;
-    screen.textContent = display;
+    screen.textContent = num1;
 });
 
 const one_b = document.querySelector('#one');
@@ -135,4 +144,22 @@ clear_b.addEventListener('click', (e) => {
     op = undefined;
     display = 0;
     screen.textContent = display;
-})
+});
+
+const equals_b = document.querySelector('#equals');
+equals_b.addEventListener('click', (e) => {
+    num2 = display;
+    if (num1 != undefined && num2 != undefined && op != undefined) {
+        display = operate(op, num1, num2);
+        screen.textContent = display;
+        num1 = undefined;
+        num2 = undefined;
+        op = undefined;
+    } else {
+        num1 = 0;
+        display = 0;
+        op = undefined;
+        num2 = undefined;
+        screen.textContent = display;
+    }
+});
